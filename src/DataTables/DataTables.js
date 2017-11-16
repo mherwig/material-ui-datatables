@@ -92,6 +92,7 @@ class DataTables extends Component {
     onNextPageClick: PropTypes.func,
     onPreviousPageClick: PropTypes.func,
     onRowSelection: PropTypes.func,
+    onRowHover: PropTypes.func,
     onRowSizeChange: PropTypes.func,
     onSortOrderChange: PropTypes.func,
     page: PropTypes.number,
@@ -250,6 +251,20 @@ class DataTables extends Component {
     }
   }
 
+  handleRowHover = (row) => {
+    const {onRowHover} = this.props;
+    if (onRowHover) {
+      onRowHover(row);
+    }
+  }
+
+  handleRowHoverExit = (row) => {
+    const {onRowHoverExit} = this.props;
+    if (onRowHoverExit) {
+      onRowHoverExit(row);
+    }
+  }
+
   renderTableRowColumnData = (row, column) => {
     if (column.render) return column.render(row[column.key], row);
     return row[column.key];
@@ -403,6 +418,8 @@ class DataTables extends Component {
           onCellClick={this.handleCellClick}
           onCellDoubleClick={this.handleCellDoubleClick}
           onRowSelection={this.handleRowSelection}
+          onRowHover={this.handleRowHover}
+          onRowHoverExit={this.handleRowHoverExit}
           style={tableStyle}
           bodyStyle={tableBodyStyle}
           wrapperStyle={tableWrapperStyle}
